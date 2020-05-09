@@ -40,7 +40,7 @@ public class TestUtil extends baseTest
 			Thread.sleep(5000L);
 			try
 			{
-				// Logic to check login successfull or not
+				// Logic to check login successful or not
 				String displayedUserName=driver.findElement(By.xpath(OR.getProperty("start_payment_button"))).getText();
 			
 				if(displayedUserName.equals("Start a Payment")){

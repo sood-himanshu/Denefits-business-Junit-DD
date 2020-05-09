@@ -4,14 +4,18 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.support.ui.Select;
 
 import com.paulhammant.ngwebdriver.NgWebDriver;
 
@@ -47,10 +51,45 @@ public class registerTest extends baseTest
 		 getObject("register_first_name_input").sendKeys("Test Doc");
 		 getObject("register_last_name_input").sendKeys("9 May");
 		 getObject("register_phone_input").click();
-		 getObject("register_phone_input").sendKeys(Keys.HOME, "7788441199");
-		 getObject("register_email_input").sendKeys("testdoc9may@mailinator.com");
+		 getObject("register_phone_input").sendKeys(Keys.HOME, "1188441199");
+		 getObject("register_email_input").sendKeys("testdoc9may4@mailinator.com");
 		 getObject("register_password_input").sendKeys("tester1234");
 		 
+		 Select s = new Select(getObject("register_industry_drop_down"));
+		 Thread.sleep(2000);
+		 s.selectByIndex(1);
+		 Thread.sleep(3000);
+		 s= new Select(getObject("register_sub_industry_drop_down"));
+		 s.selectByIndex(1);
+		 getObject("register_address_input").sendKeys("Test Address");
+		 
+		 getObject("register_zip_code_drop_down").click();
+		 Thread.sleep(2000);
+		 getObject("register_zip_input").sendKeys("12345");
+		 Thread.sleep(4000);
+		 getObject("register_zip_input").sendKeys(Keys.ENTER);
+		 getObject("sign_up_button").click();
+		 Thread.sleep(2000);
+		 TestUtil.takeScreenShot("Check-Register");
+		 Thread.sleep(7000);
+		 
+		 
+		 try
+			{
+				// Logic to check register successful or not
+				String signUpButton=driver.findElement(By.xpath(OR.getProperty("sign_up_button"))).getText();
+			
+				if(signUpButton.equals("Sign Up")){
+					System.out.println("Not able to login");
+				}else{
+					System.out.println("Able to Login");
+				}
+			}
+			catch(Throwable t)
+			{
+				TestUtil.takeScreenShot("Registered");
+				System.out.println("Able to login");
+			}	
 	}
 	
 	@Parameters
@@ -73,8 +112,11 @@ public class registerTest extends baseTest
 		data[1][4]="Delhi";*/
 		
 		return Arrays.asList(data);
-
-		
-		
+	}
+	
+	@After
+	public void quit()
+	{
+		driver.quit();
 	}
 }
