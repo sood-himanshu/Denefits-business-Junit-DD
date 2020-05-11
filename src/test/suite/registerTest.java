@@ -25,6 +25,27 @@ import testUtil.TestUtil;
 @RunWith(Parameterized.class)
 public class registerTest extends baseTest 
 {
+	
+	public String firstName;
+	public String lastName;
+	public String phone;
+	public String email;
+	public String password;
+	public String address;
+	public String positiveData;
+
+	
+	public registerTest(String firstName,String lastName,String phone, String email, String password, String address, String positiveData){
+		System.out.println("Enter constructor");
+		this.firstName=firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.email = email;
+		this.password=password;
+		this.address=address;
+		this.positiveData=positiveData;
+	}
+	
 	@Before
 	public void beforeTest() throws IOException
 	{
@@ -48,12 +69,12 @@ public class registerTest extends baseTest
 		 getObject("sign_up_link").click();
 		 Thread.sleep(5000);
 		 
-		 getObject("register_first_name_input").sendKeys("Test Doc");
-		 getObject("register_last_name_input").sendKeys("9 May");
+		 getObject("register_first_name_input").sendKeys(firstName);
+		 getObject("register_last_name_input").sendKeys(lastName);
 		 getObject("register_phone_input").click();
-		 getObject("register_phone_input").sendKeys(Keys.HOME, "1188441199");
-		 getObject("register_email_input").sendKeys("testdoc9may4@mailinator.com");
-		 getObject("register_password_input").sendKeys("tester1234");
+		 getObject("register_phone_input").sendKeys(Keys.HOME, phone);
+		 getObject("register_email_input").sendKeys(email);
+		 getObject("register_password_input").sendKeys(password);
 		 
 		 Select s = new Select(getObject("register_industry_drop_down"));
 		 Thread.sleep(2000);
@@ -61,7 +82,7 @@ public class registerTest extends baseTest
 		 Thread.sleep(3000);
 		 s= new Select(getObject("register_sub_industry_drop_down"));
 		 s.selectByIndex(1);
-		 getObject("register_address_input").sendKeys("Test Address");
+		 getObject("register_address_input").sendKeys(address);
 		 
 		 getObject("register_zip_code_drop_down").click();
 		 Thread.sleep(2000);
@@ -80,15 +101,15 @@ public class registerTest extends baseTest
 				String signUpButton=driver.findElement(By.xpath(OR.getProperty("sign_up_button"))).getText();
 			
 				if(signUpButton.equals("Sign Up")){
-					System.out.println("Not able to login");
+					System.out.println("Not able to register");
 				}else{
-					System.out.println("Able to Login");
+					System.out.println("Able to register");
 				}
 			}
 			catch(Throwable t)
 			{
 				TestUtil.takeScreenShot("Registered");
-				System.out.println("Able to login");
+				System.out.println("Able to Register");
 			}	
 	}
 	
@@ -114,9 +135,9 @@ public class registerTest extends baseTest
 		return Arrays.asList(data);
 	}
 	
-	@After
+	/*@After
 	public void quit()
 	{
 		driver.quit();
-	}
+	}*/
 }
